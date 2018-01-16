@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper    
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="classStatus.dao.LessonArrangeMapper">
+	
+	<resultMap type="LessonArrange" id="lessonArrangeResultMap">
+		<id property="classroomId" column="classroom_id"/>
+		<id property="schoolWeek" column="school_week" />
+		<id property="datesOfWeek" column="dates_of_week"/>
+		
+		<result property="date" column="date"/>
+		<result property="morningReading" column="morning_reading"/>
+		<result property="lesson1" column="lesson1"/>
+		<result property="lesson2" column="lesson2"/>
+		<result property="lesson3" column="lesson3"/>
+		<result property="lesson4" column="lesson4"/>
+		<result property="lesson5" column="lesson5"/>
+		<result property="lesson6" column="lesson6"/>
+		<result property="lesson7" column="lesson7"/>
+		<result property="lesson8" column="lesson8"/>
+		<result property="noon" column="noon" />
+		<result property="dinner" column="dinner" />
+		<result property="nightClasses" column="night_classes" />
+	</resultMap>
+	
+	<select id="queryClassroomLessonArrangeByClassroomId" parameterType="int"
+	resultType="classStatus.pojo.LessonArrange" resultMap="lessonArrangeResultMap">
+		select * from lesson_arrange where classroom_id=#{classroomId}
+	</select>
+	
+	<select id="queryAllClassroomLessonArrange" resultType="classStatus.pojo.LessonArrange" resultMap="lessonArrangeResultMap">
+		select * from lesson_arrange
+	</select>
+	
+	<update id="updateClassroomLessonArrange" parameterType="classStatus.pojo.LessonArrange" >
+		update lesson_arrange set 
+		morning_reading=#{morningReading},
+		lesson1=#{lesson1},
+		lesson2=#{lesson2},
+		lesson3=#{lesson3},
+		lesson4=#{lesson4},
+		lesson5=#{lesson5},
+		noon=#{noon},
+		lesson6=#{lesson6},
+		lesson7=#{lesson7},
+		lesson8=#{lesson8},
+		dinner=#{dinner},
+		night_classes=#{nightClasses}
+		where classroom_id=#{classroomId} and 
+		school_week=#{schoolWeek} and
+		dates_of_week=#{datesOfWeek}
+	</update>
+	
+	<insert id="insertClassroomLessonArrange" parameterType="classStatus.pojo.LessonArrange" >
+		INSERT INTO LESSON_ARRANGE(classroom_id,school_week,dates_of_week,date,morning_reading,
+		lesson1,lesson2,lesson3,lesson4,lesson5,noon,lesson6,lesson7,lesson8,dinner,night_classes
+		)
+		values(
+			#{classroomId},#{schoolWeek},#{datesOfWeek},#{date},#{morningReading},
+			#{lesson1},#{lesson2},#{lesson3},#{lesson4},#{lesson5},#{noon},#{lesson6},
+			#{lesson7},#{lesson8},#{dinner},#{nightClasses}
+		)
+	</insert>
+	
+	<!--多个参数,0代表dao接口里的第一个参数,1代表第二个参数  -->
+	<select id="queryArrangeByDateAndId"  resultType="classStatus.pojo.LessonArrange" resultMap="lessonArrangeResultMap">
+		SELECT * FROM LESSON_ARRANGE WHERE DATE=#{0} and CLASSROOM_ID=#{1}  
+	</select>
+	
+	<!--删除课程安排  -->
+	<delete id="deleteClassroomLessonArrangeByClassroomId" parameterType="classStatus.pojo.LessonArrange">
+		DELETE FROM LESSON_ARRANGE WHERE CLASSROOM_ID=#{classroomId} and school_week=#{schoolWeek} and DATES_OF_WEEK=#{datesOfWeek}
+	</delete>
+	
+	<!--查找课室安排信息  -->
+	<select id="queryByIdAndWeekAndDates"  resultMap="lessonArrangeResultMap"  resultType="classStatus.pojo.LessonArrange">
+		SELECT * FROM LESSON_ARRANGE WHERE CLASSROOM_ID=#{classroomId} and school_week=#{schoolWeek} and DATES_OF_WEEK=#{datesOfWeek}
+	</select>
+</mapper>

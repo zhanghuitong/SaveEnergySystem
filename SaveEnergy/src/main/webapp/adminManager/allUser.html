@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+    <title>显示所有管理员</title>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/SaveEnergy/css/bootstrap-table.min.css" />
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/SaveEnergy/css/iconfont.css" />
+</head>
+
+<body>
+    <table data-toggle="table" id="table" data-search="true" data-show-toggle="true" data-halign="center" data-pagination="true" data-show-refresh="true" class="table table-condensed table-responsive">
+        <thead>
+            <tr>
+                <th data-field="userId"><span>用户ID</span></th>
+                <th data-field="userName"><span>用户名</span></th>
+                <th data-field="authority" data-formatter="authority"><span>用户权限</span></th>
+                <th data-field="userStatus" data-formatter="status"><span>用户状态</span></th>
+                <th data-formatter="operaction"><span>操作</span></th>
+            </tr>
+        </thead>
+    </table>
+</body>
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+<script type="text/javascript" src="/SaveEnergy/lib/layer/layer.js"></script>
+<script type="text/javascript" src="/SaveEnergy/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/SaveEnergy/js/bootstrap-table.min.js"></script>
+<script type="text/javascript" src="/SaveEnergy/js/bootstrap-table-zh-CN.min.js"></script>
+
+<script type="text/javascript">
+    function initTable() {
+        $('#table').bootstrapTable({
+            sidePagination: "client",
+            pageNumber: 1,
+            url: "/SaveEnergy/user/queryAllUser.do",
+            method: "post",
+            pageSize: 5,
+            pageList: [10, 25, 50, 100],
+            cardView: false,
+        });
+    }
+
+    function authority(value, row, index) {
+        var temp = "";
+        if (value == "1") {
+            temp = "<span>管理员</span>"
+        } else {
+            temp = "<span>普通用户</span>"
+        }
+        return temp;
+    }
+
+    function status(value, row, index) {
+        var temp = "";
+        if (value == "1") {
+            temp = "<span>正常</span>"
+        } else {
+            temp = "<span>冻结</span>"
+        }
+        return temp;
+    }
+
+    /*生成操作按钮  */
+    function operaction(value, row, index) {
+        return [
+            '<button id="" name="updateArrange" class="btn btn-default" onclick="modifyUserMessage(this)" >修改</button>&nbsp;&nbsp;',
+            '<button id="" name="deleteArrange" class="btn btn-default" onclick="forzenUser()">冻结</button>&nbsp;&nbsp;'
+        ].join("");
+    }
+
+    /*更新用户信息*/
+    function modifyUserMessage(obj) {
+        var data = obj.parents().siblings(),
+            arr = [];
+        for (var j = 0; j < arr.length; j++) {
+            arr.push(data[i].text())
+        }
+        layer.open({
+            type: 2,
+            title: '修改用户信息',
+            maxmin: true,
+            shadeClose: true, //点击遮罩关闭层
+            area: ['900px', '560px'],
+            closeBtn: 1,
+            content: '/SaveEnergy/adminManager/updateUser.html',
+            success: function(layero, index) {
+                var body = layer.getChildFrame('body', index); //建立父子关系
+                var inputList = body.find("input");
+                for (var i = 0; i < inputList.length; i++) {
+                    $(inputlist[i]).val(arr[i]);
+                }
+            }
+        });
+    })
+
+
+
+    /*冻结用户*/
+    function frozenUser() {
+        var id = "";
+        id = $(obj).parents("tr").children().eq(0).text();
+        layer.confirm("是否确认冻结", {
+                btn: ['冻结', '取消']
+            },
+            function() {
+                $.ajax({
+                    type: "post",
+                    url: "/SaveEnergy/user/delteLessonArrange.do",
+                    async: true,
+                    data: {
+                        userId: id
+                    },
+                    success: function(result) {
+                        if (result == 1) {
+                            layer.msg("冻结成功", {
+                                icon: 1
+                            });
+                            //js删除页面得数据项
+                        } else {
+                            layer.msg("删除失败", {
+                                icon: 2
+                            })
+                        }
+                    }
+                });
+            },
+            function() {
+
+            }
+
+        )
+    }
+
+    window.onload = initTable();
+</script>
+
+</html>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper    
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="classStatus.dao.ClassStatusMapper">
+	
+	<!--type是pojo的类名  -->
+	<resultMap type="classStatus" id="classStatusResultMap">
+		<!--主键,有多个字段要定义多个id  -->
+		<id property="classroomId" column="classroom_id" />
+		
+		<!--普通字段  -->
+		<result property="classroomName" column="classroom_name"/>
+		<result property="ip" column="ip" />
+		<result property="connectionStatus" column="connection_status"/> 
+		<result property="totalSwitch" column="total_switch"/> 
+		<result property="l1Switch" column="l1_switch"/> 
+		<result property="l2Switch" column="l2_switch"/> 
+		<result property="l3Switch" column="l3_switch"/> 
+		<result property="l4Switch" column="l4_switch"/>
+		<result property="f1Switch" column="f1_switch"/>
+		<result property="f2Switch" column="f2_switch"/>
+		<result property="f3Switch" column="f3_switch"/>
+		<result property="f4Switch" column="f4_switch"/>
+		<result property="a1Switch" column="a1_Switch" />
+		<result property="a1Pattern" column="a1_pattern"/>
+		<result property="a1WindSpeed" column="a1_wind_Speed"/>
+		<result property="a1Temperature" column="a1_temperature"/>
+		<result property="a2Switch" column="a2_switch"/>
+		<result property="a2Pattern" column="a2_pattern" />
+		<result property="a2WindSpeed" column="a2_wind_Speed"/>
+		<result property="a2Temperature" column="a2_temperature"/>
+		<result property="temperature" column="temperature" />
+		<result property="humidity" column="humidity"/>
+	</resultMap> 
+	<select id="queryAllClassroomStatus" resultType="classStatus.pojo.ClassStatus" resultMap="classStatusResultMap">
+		select * from classroom_status
+	</select>
+
+	<select id="queryClassroomStatusByClassroomName" parameterType="String"
+		resultType="classStatus.pojo.ClassStatus" resultMap="classStatusResultMap">
+		SELECT * FROM CLASSROOM_STATUS WHERE
+		CLASSROOM_NAME=#{classroomName}
+	</select>
+
+	<update id="updateClassroomStatus" parameterType="classStatus.pojo.ClassStatus">
+		update classroom_status set
+		classroom_name=#{classroomName},
+		total_switch=#{totalSwitch},
+		l1_switch=#{l1Switch},
+		l2_switch=#{l2Switch},
+		l3_switch=#{l3Switch}, 
+		l4_switch=#{l4Switch},
+		f1_switch=#{f1Switch},
+		f2_switch=#{f2Switch},
+		f3_switch=#{f3Switch},
+		f4_switch=#{f4Switch},
+		a1_switch=#{a1Switch},
+		a1_pattern=#{a1Pattern},
+		a1_wind_speed=#{a1WindSpeed},
+		a1_temperature=#{a1Temperature},
+		a2_switch=#{a2Switch},
+		a2_pattern=#{a2Pattern},
+		a2_wind_speed=#{a2WindSpeed},
+		a2_temperature=#{a2Temperature},
+		temperature=#{temperature},
+		humidity=#{humidity}
+		where classroom_id=#{classroomId}
+	</update>
+
+	<insert id="insertClassroomStatus" parameterType="classStatus.pojo.ClassStatus">
+		insert into
+		classroom_status(Classroom_id,classroom_name,ip,connection_status,total_switch,l1_switch,l2_switch,l3_switch,l4_switch,
+		f1_switch,f2_switch,f3_switch,f4_switch,a1_switch,a1_pattern,a1_wind_speed,a1_temperature,
+		a2_switch,a2_pattern,a2_wind_speed,a2_temperature,temperature,humidity)
+		values
+		(#{classroomId},
+		#{classroomName},
+		#{ip},
+		#{connectionStatus},
+		#{totalSwitch},
+		#{l1Switch},
+		#{l2Switch},
+		#{l3Switch},
+		#{l4Switch},
+		#{f1Switch},
+		#{f2Switch},
+		#{f3Switch},
+		#{f4Switch},
+		#{a1Switch},
+		#{a1Pattern},
+		#{a1WindSpeed},
+		#{a1Temperature},
+		#{a2Switch},
+		#{a2Pattern},
+		#{a2WindSpeed},
+		#{a2Temperature},
+		#{temperature},
+		#{humidity}
+		)
+	</insert>
+
+
+	<delete id="deleteClassroomStatusByClassroomId">
+		delete from classroom_status where
+		classroom_id=#{classroomId}
+	</delete>
+</mapper>

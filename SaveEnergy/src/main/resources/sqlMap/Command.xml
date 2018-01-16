@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper    
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="classStatus.dao.CommandMapper">
+	
+	<insert id="insertCommand" parameterType="classStatus.pojo.Command">
+		insert into command(Classroom_id,total_switch,l1_switch,l2_switch,l3_switch,l4_switch,
+		f1_switch,f2_switch,f3_switch,f4_switch,a1_switch,a1_pattern,a1_wind_speed,a1_temperature,
+		a2_switch,a2_pattern,a2_wind_speed,a2_temperature)
+		values(#{classroom_id},#{total_switch},#{l1_switch},#{l2_switch},#{l3_switch},#{l4_switch},#{f1_switch},
+		#{f2_switch},#{f3_switch},#{f4_switch},#{a1_switch},#{a1_pattern},#{a1_wind_speed},#{a1_temperature},
+		#{a2_switch},#{a2_pattern},#{a2_wind_speed},#{a2_temperature})
+	</insert>
+	
+	<delete id="deleteCommandByClassroomId">
+		delete from command where classroom_id=#{classroom_id)}
+	</delete>
+	
+	<select id="queryAllCommand" resultType="classStatus.pojo.Command">
+		select * from command 
+	</select>
+</mapper>

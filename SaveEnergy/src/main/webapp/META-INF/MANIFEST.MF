@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: SaveEnergy
+Bundle-SymbolicName: SaveEnergy
+Bundle-Version: 1.0.0.qualifier
+Export-Package: .,
+ classStatus.action,
+ classStatus.controller,
+ classStatus.dao,
+ classStatus.pojo,
+ classStatus.service,
+ classStatus.service.impl
+Require-Bundle: org.junit

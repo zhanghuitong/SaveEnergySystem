@@ -1,0 +1,67 @@
+ <!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+<title>查看课室安排表</title>
+<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css"
+	href="/SaveEnergy/css/bootstrap-table.min.css" />
+<link
+	href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+	rel="stylesheet">
+<link rel="stylesheet" href="/SaveEnergy/css/iconfont.css" />
+</head>
+
+<body>
+	<table data-toggle="table" id="table" data-search="true"
+		data-show-toggle="true" data-halign="center" data-pagination="true"
+		class="table table-condensed table-responsive">
+		<thead>
+			<tr>
+				<th data-field="jobName" ><span>作业名称</span></th>
+				<th data-field="jobGroup" ><span>作业组</span></th>
+				<th data-field="nextFireTime"><span>下一次触发时间</span></th>
+				<th data-formatter = "operaction"><span>操作</span></th>
+			</tr>
+		</thead>
+	</table>
+</body>
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+<script type="text/javascript" src="/SaveEnergy/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/SaveEnergy/js/bootstrap-table.min.js"></script>
+<script type="text/javascript" src="/SaveEnergy/js/bootstrap-table-zh-CN.min.js"></script>
+<script type="text/javascript">
+	function initTable() {
+		$('#table').bootstrapTable({
+			sidePagination : "client",
+			pageNumber : 1,
+			url : "/SaveEnergy/quartz/query.do",
+			method : "post",
+			pageSize : 5,
+			pageList : [ 10, 25, 50, 100 ],
+			cardView : false,
+		});
+	}
+	
+	/*生成操作按钮  */
+	function operaction(value,row,index){
+		return [
+			'<button id="update" name="updateArrange" class="btn btn-default"  >修改</button>&nbsp;&nbsp;',
+			'<button id="delete" name="deleteArrange" class="btn btn-default" >删除</button>&nbsp;&nbsp;'
+		].join("");
+	}
+	
+	/*删除作业任务*/
+	function removeJob(){
+		$.ajax({
+			type:"post",
+			url:"/SaveEnergy/quartz/removeJob.do",
+			async:true,
+			date:{}
+		});
+	}
+	window.onload = initTable();
+</script>
+
+</html>

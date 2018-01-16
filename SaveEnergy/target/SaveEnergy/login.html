@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:18:23 GMT -->
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>登录</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link rel="shortcut icon" href="favicon.ico"> <link href="/SaveEnergy/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="/SaveEnergy/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+
+    <link href="/SaveEnergy/css/animate.min.css" rel="stylesheet">
+    <link href="/SaveEnergy/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html" />
+    <![endif]-->
+    <script>if(window.top !== window.self){ window.top.location = window.location;}</script>
+</head>
+
+<body class="gray-bg">
+
+    <div class="middle-box text-center loginscreen  animated fadeInDown">
+        <div>
+            <div>
+                <h1 class="logo-name">E+</h1>
+            </div>
+            <h3>欢迎使用课室智能节电系统</h3>
+
+            <form class="m-t" role="form" action="index.html" onsubmit=" return formCheck()">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="用户名" name="userName" id="userName" required="">
+                </div>
+                <div id="userNameMsg"></div>
+                <div class="form-group">
+                    <input type="password" class="form-control" placeholder="密码" name="password"  id="password" required="">
+                </div>
+                <div id="passwordMsg"></div>
+                <button type="submit" class="btn btn-primary block full-width m-b">登 录</button>
+                <p class="text-muted text-center"> <a href="login.html#"><small>忘记密码了？</small></a> 
+                </p>
+            </form>
+        </div>
+    </div>
+    <script src="/SaveEnergy/js/jquery.min.js?v=2.1.4"></script>
+    <script src="/SaveEnergy/js/bootstrap.min.js?v=3.3.6"></script>
+    <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
+      <script>
+      /*验证用户名  */
+    	function checkUserName(){
+    		var temp=false;
+    		$.ajax({
+    			type:"post",
+    			url:"/SaveEnergy/user/checkUserId.do",
+    			data:{userId:$("#userName").val()},
+    			async:true,
+    			success:function(result){
+    				if(result!=0){
+    					temp=true;
+    				}else{
+    					$("#userNameMsg").html("不存在此用户");
+    					temp= false;
+    				}
+    			}
+    		});
+    		return temp;
+    	}
+    	function checkAccount(){
+    		var check=false;
+    		var name=$("#userName").val();
+    		var pwd=$("#password").val();
+    		$.ajax({
+    			type:"post",
+    			url:"SaveEnergy/user/checkAccount",
+    			async:true,
+    			date:{userName:name,password:pwd},
+    			success:function(result){
+    				if(result==1){
+    					check=true;
+    				}else{
+    					$("#passwordMsg").CSS("color","red");
+    					$("#passwordMsg").html("密码错误")
+    					check=false;
+    				}
+    			}
+    		});
+    		return check;
+    	}
+    	
+    	function formCheck(){
+    		return checkAccount()*checkUserName();
+    	}
+    </script>
+</body>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:18:23 GMT -->
+</html>

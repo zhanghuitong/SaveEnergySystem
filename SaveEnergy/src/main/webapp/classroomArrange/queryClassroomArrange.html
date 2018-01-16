@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>查看课室安排表</title>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/SaveEnergy/css/bootstrap-table.min.css" />
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/SaveEnergy/css/layer.css" />
+    <link rel="stylesheet" href="/SaveEnergy/css/iconfont.css" />
+</head>
+
+<body>
+    <table data-toggle="table" id="table" data-search="true" data-show-toggle="true" data-halign="center" data-pagination="true" data-toolbar-align="left" data-refresh="true" class="table table-condensed table-responsive">
+        <thead>
+            <tr>
+                <th data-field="classroomId"><span>课室</span></th>
+                <th data-field="schoolWeek"><span>校历周数</span></th>
+                <th data-field="datesOfWeek"><span>周几</span></th>
+                <th data-field="date"><span>日期</span></th>
+                <th data-field="morningReading" data-formatter="isLesson"><span>早读</span></th>
+                <th data-field="lesson1" data-formatter="isLesson"><span>第一节</span></th>
+                <th data-field="lesson2" data-formatter="isLesson"><span>第二节</span></th>
+                <th data-field="lesson3" data-formatter="isLesson"><span>第三节</span></th>
+                <th data-field="lesson4" data-formatter="isLesson"><span>第四节</span></th>
+                <th data-field="noon" data-formatter="isLesson"><span>中午</span></th>
+                <th data-field="lesson6" data-formatter="isLesson"><span>第六节</span></th>
+                <th data-field="lesson7" data-formatter="isLesson"><span>第七节</span></th>
+                <th data-field="lesson8" data-formatter="isLesson"><span>第八节</span></th>
+                <th data-field="dinner" data-formatter="isLesson"><span>晚餐时间</span></th>
+                <th data-field="nightClasses" data-formatter="isLesson"><span>晚修</span></th>
+                <th data-formatter="operaction"><span>操作</span></th>
+            </tr>
+        </thead>
+    </table>
+</body>
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+<script type="text/javascript" src="/SaveEnergy/lib/layer/layer.js"></script>
+<script type="text/javascript" src="/SaveEnergy/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/SaveEnergy/js/bootstrap-table.min.js"></script>
+<script type="text/javascript" src="/SaveEnergy/js/bootstrap-table-zh-CN.min.js"></script>
+<script type="text/javascript">
+    function initTable() {
+        $('#table').bootstrapTable({
+            sidePagination: "client",
+            pageNumber: 1,
+            url: "/SaveEnergy/lessonArrange/queryAllLessonArrange.do",
+            method: "post",
+            pageSize: 5,
+            pageList: [10, 25, 50, 100],
+            cardView: false,
+        });
+
+    }
+
+    /*显示课室安排的图标,有被选中的显示check图标*/
+    function isLesson(value, row, index) {
+        var temp = "";
+        if (value == "1") {
+            temp = '<span class="fa fa-check font-color-green"></span>'
+        } else {
+            temp = ""
+        }
+        return temp;
+
+    }
+    /*生成操作按钮  */
+    function operaction(value, row, index) {
+        return [
+            '<button  name="updateArrange" class="btn btn-default" onclick="modifyArrange(this)" >修改</button>&nbsp;&nbsp;',
+            '<button  name="deleteArrange" class="btn btn-default" onclick="del(this)" >删除</button>&nbsp;&nbsp;'
+        ].join("");
+    }
+
+    /*修改课程安排信息*/
+    function modifyArrange(obj) {
+        var id = "";
+        var schoolWeek = "";
+        var datesOfWeek = "";
+        id = $(obj).parents("tr").children().eq(0).text();
+        schoolWeek = $(obj).parents("tr").children().eq(1).text();
+        datesOfWeek = $(obj).parents("tr").children().eq(2).text();
+        layer.open({
+            type: 2,
+            maxmin: true,
+            closeBtn: 1,
+            title: "修改课程安排信息",
+            area: ["800px", "600px"],
+            content: "/SaveEnergy/lessonArrange/modifyMessage.do?id=" + id + "&schoolWeek=" + schoolWeek + "&datesOfWeek=" + datesOfWeek, //iframe的url
+        });
+    }
+
+    /*删除课程安排*/
+    function del(obj) {
+        var id = "";
+        var schoolWeek = "";
+        var datesOfWeek = "";
+        id = $(obj).parents("tr").children().eq(0).text()
+        schoolWeek = $(obj).parents("tr").children().eq(1).text();
+        datesOfWeek = $(obj).parents("tr").children().eq(2).text();
+        layer.confirm("是否确认删除", {
+                btn: ['删除', '取消']
+            },
+            function() {
+                $.ajax({
+                    type: "post",
+                    url: "/SaveEnergy/lessonArrange/delteLessonArrange.do",
+                    async: true,
+                    data: {
+                        classroomId: id,
+                        schoolWeek: schoolWeek,
+                        datesOfWeek: datesOfWeek
+                    },
+                    success: function(result) {
+                        if (result == 1) {
+
+                            layer.msg("删除成功", {
+                                icon: 1
+                            });
+                            //js删除页面得数据项
+                        } else {
+                            layer.msg("删除失败", {
+                                icon: 2
+                            })
+                        }
+                    }
+                });
+            },
+            function() {
+
+            }
+
+        )
+    }
+
+    window.onload = initTable();
+</script>
+
+</html>

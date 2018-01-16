@@ -1,0 +1,168 @@
+<!--_meta 作为公共模版分离出去-->
+<!DOCTYPE HTML>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="renderer" content="webkit|ie-comp|ie-stand">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+		<meta http-equiv="Cache-Control" content="no-siteapp" />
+		<link rel="Bookmark" href="/favicon.ico">
+		<link rel="Shortcut Icon" href="/favicon.ico" />
+		<!--[if lt IE 9]>
+<script type="text/javascript" src="lib/html5shiv.js"></script>
+<script type="text/javascript" src="lib/respond.min.js"></script>
+<![endif]-->
+		<link rel="stylesheet" type="text/css" href="/SaveEnergy/static/h-ui/css/H-ui.min.css" />
+		<link rel="stylesheet" type="text/css" href="/SaveEnergy/static/h-ui.admin/css/H-ui.admin.css" />
+		<link rel="stylesheet" type="text/css" href="/SaveEnergy/lib/Hui-iconfont/1.0.8/iconfont.css" />
+
+		<link rel="stylesheet" type="text/css" href="/SaveEnergy/static/h-ui.admin/css/style.css" />
+
+		<!--[if IE 6]>
+<script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script>
+<![endif]-->
+		<!--/meta 作为公共模版分离出去-->
+		<title>添加课室安排信息</title>
+	</head>
+
+	<body>
+		<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span>课室安排管理<span class="c-gray en">&gt;</span> 添加课室安排信息
+			<a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
+		</nav>
+		<article class="page-container">
+			<form action="/SaveEnergy/lessonArrange/insertLessonArrange.do" method="post" class="form form-horizontal" id="form-member-add">
+				<div class="row cl">
+					<label class="form-label col-xs-4 col-sm-3"><span
+					class="c-red">*</span>选择课室：</label>
+					<div class="formControls col-xs-8 col-sm-6">
+						<select id="classroomId" name="classroomId">
+							<option>101</option>
+						</select>
+					</div>
+				</div>
+				<div class="row cl">
+					<label class="form-label col-xs-4 col-sm-3"><span
+					class="c-red">*</span>第几周:</label>
+					<div class="formControls col-xs-8 col-sm-9 skin-minimal">
+						<div>
+							<select id="schoolWeek" name="schoolWeek">
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+								<option value="6">6</option>
+								<option value="7">7</option>
+								<option value="8">8</option>
+								<option value="9">9</option>
+								<option value="10">10</option>
+								<option value="11">11</option>
+								<option value="12">12</option>
+								<option value="13">13</option>
+								<option value="14">14</option>
+								<option value="15">15</option>
+								<option value="16">16</option>
+								<option value="17">17</option>
+								<option value="18">18</option>
+								<option value="19">19</option>
+								<option value="20">20</option>
+								<option value="21">21</option>
+								<option value="22">22</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="row cl">
+					<label class="form-label col-xs-4 col-sm-3"><span
+					class="c-red">*</span>星期几:</label>
+					<div class="formControls col-xs-8 col-sm-6">
+						<select id="dateOfWeek" name="datesOfWeek">
+							<option value="1">一</option>
+							<option value="2">二</option>
+							<option value="3">三</option>
+							<option value="4">四</option>
+							<option value="5">五</option>
+							<option value="6">六</option>
+							<option value="7">日</option>
+						</select>
+					</div>
+				</div>
+				<!--此处需要一个日期插件-->
+				<div class="row cl">
+					<label class="form-label col-xs-4 col-sm-3"><span
+					class="c-red">*</span>日期:</label>
+					<div class="formControls col-xs-8 col-sm-6">
+						<!--最小可选日期设置为当前系统日期-->
+						<input type="text" onfocus="WdatePicker({minDate:'%y-%M-%d' })" id="date" name="date" class="input-text Wdate" style="width:120px;">
+					</div>
+				</div>
+
+				<div class="row cl">
+					<label class="form-label col-xs-4 col-sm-3">课室使用安排:</label>
+					<div class="formControls col-xs-8 col-sm-6">
+						<label for="morningReading">早读</label>
+						<input type="checkbox" id="morningReading" name="morningReading" value="1" />
+						<label>第一节</label>
+						<input type="checkbox" id="lesson1" name="lesson1" value="1" />
+						<label>第二节</label>
+						<input type="checkbox" id="lesson2" name="lesson2" value="1" />
+						<label>第三节</label>
+						<input type="checkbox" id="lesson3" name="lesson3" value="1" />
+						<label>第四节</label>
+						<input type="checkbox" id="lesson4" name="lesson4" value="1" />
+						<label>中午</label>
+						<input type="checkbox" id="noon" name="noon" value="1" />
+						<label>第五节</label>
+						<input type="checkbox" id="lesson5" name="lesson5" value="1" />
+						<label>第六节</label>
+						<input type="checkbox" id="lesson6" name="lesson6" value="1" />
+						<label>第七节</label>
+						<input type="checkbox" id="lesson7" name="lesson7" value="1" />
+						<label>第八节</label>
+						<input type="checkbox" id="lesson8" name="lesson8" value="1" />
+						<label>晚餐</label>
+						<input type="checkbox" id="dinner" name="dinner" value="1" />
+						<label>晚修</label>
+						<input type="checkbox" id='nightClasses' name="nightClasses" value="1" />
+						<input type="hidden" id="checkboxStr" name="checkboxStr" />
+					</div>
+				</div>
+
+				<div class="row cl">
+					<div class="col-xs-8 col-sm-6 col-xs-offset-4 col-sm-offset-3">
+						<input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;" onclick="strAdd()">
+					</div>
+				</div>
+			</form>
+		</article>
+
+		<!--_footer 作为公共模版分离出去-->
+		<script type="text/javascript" src="/SaveEnergy/lib/jquery/1.9.1/jquery.min.js"></script>
+		<script type="text/javascript" src="/SaveEnergy/static/h-ui/js/H-ui.min.js"></script>
+		<script type="text/javascript" src="/SaveEnergy/static/h-ui.admin/js/H-ui.admin.js"></script>
+		<!--/_footer 作为公共模版分离出去-->
+
+		<!--请在下方写此页面业务相关的脚本-->
+		<script type="text/javascript" src="/SaveEnergy/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+		<script type="text/javascript">
+			
+
+			function strAdd() {
+				var str = "";
+				$("input:checkbox").each(function() {
+					if($(this).prop("checked") == true) {
+						str += "1" + ",";
+					} else {
+						str += "0" + ",";
+					}
+				})
+				$("#checkboxStr").val(str);
+			}
+		</script>
+		<!--/请在上方写此页面业务相关的脚本-->
+	</body>
+
+</html>

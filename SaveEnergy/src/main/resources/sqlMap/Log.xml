@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper    
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="classStatus.dao.LogMapper">
+
+	<select id="queryAllLog" resultType="classStatus.pojo.Log">
+		select * from log 
+	</select>
+	
+	<insert id="insertLog" parameterType="classStatus.pojo.Log">
+		INSERT INTO LOG(log_id,classroom_id,operacte_device,status,
+		operaction_time,remark)
+		values(
+			#{log_id},#{classroom_id},#{operacte_device},#{status},#{operaction_time},
+			#{remark}
+		)
+	</insert>
+	
+	<delete id="deleteLogByLogId" parameterType="String">
+		DELETE FROM LOG WHERE LOG_ID=#{log_id}
+	</delete>
+	
+</mapper>
